@@ -6,7 +6,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-public class SpringMvcIT extends SpringIT {
+public abstract class SpringMvcIT extends SpringIT {
     @Autowired
     private WebApplicationContext webApplicationContext;
     @Autowired
