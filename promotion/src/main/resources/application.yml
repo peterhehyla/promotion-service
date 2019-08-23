@@ -1,0 +1,26 @@
+server:
+  port: 8899
+security:
+  oauth2:
+    client:
+      access-token-uri:  https://dev.hyla.hylatest.com/haas/token
+      user-authorization-uri: https://dev.hyla.hylatest.com/haas/authorize
+      client-id: HSS
+      client-secret: Password1
+    resource:
+      token-info-uri: https://dev.hyla.hylatest.com/haas/check_token
+
+hylacatalog:
+  username: CEAPP_API_USER_ATT
+  password: Password1
+  url: https://dev.hyla.hylatest.com/hylacatalog/
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ce-app
+    username: postgres
+    password: postgres
+  cache:
+    type: redis
+  redis:
+    host: rmq.int
+    port: 6379

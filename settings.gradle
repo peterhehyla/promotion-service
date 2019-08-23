@@ -1,0 +1,7 @@
+rootProject.name = 'promotion-service'
+
+include ':api'
+include ':promotion'
+
+project(':api').projectDir = "$rootDir/api" as File
+project(':promotion').projectDir = "$rootDir/promotion" as File

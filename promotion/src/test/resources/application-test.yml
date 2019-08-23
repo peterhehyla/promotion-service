@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vzw_ce_app_test
+    username: postgres
+    password: postgres
+  cache:
+    type: NONE

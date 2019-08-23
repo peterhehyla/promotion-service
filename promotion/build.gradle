@@ -1,0 +1,65 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.7.RELEASE'
+	id 'org.sonarqube' version '2.5'
+	id 'com.jfrog.artifactory' version '4.5.4'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+ext {
+	springCloudVersion = 'Greenwich.SR2'
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+dependencies {
+	implementation(
+			project(':api'),
+			'org.springframework.boot:spring-boot-starter-actuator',
+			'org.springframework.boot:spring-boot-starter-amqp',
+			'org.springframework.boot:spring-boot-starter-oauth2-resource-server',
+			'org.springframework.cloud:spring-cloud-starter-sleuth',
+			'org.springframework.cloud:spring-cloud-starter-netflix-ribbon:2.1.2.RELEASE',
+			'org.springframework.boot:spring-boot-starter-oauth2-client',
+			'org.springframework.boot:spring-boot-starter-cache',
+			'org.springframework.boot:spring-boot-starter-data-redis',
+			'org.springframework.boot:spring-boot-starter-security',
+			'com.hylamobile.haas:haas-client:18.5',
+			'org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.4',
+			'io.springfox:springfox-swagger2:2.9.2',
+            'io.springfox:springfox-swagger-ui:2.9.2',
+			'org.springframework.security.oauth:spring-security-oauth2:2.3.6.RELEASE',
+			'com.hylamobile:ce-vzwgsbservices:19.8.1.1',
+			'org.apache.commons:commons-collections4:4.4',
+			'org.apache.httpcomponents:httpclient:4.5.9',
+			'net.sf.dozer:dozer:5.5.1',
+			'org.postgresql:postgresql'
+	)
+	implementation ('org.springframework.boot:spring-boot-starter-data-jpa') {
+		exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
+		exclude group: 'org.hibernate', module: 'hibernate-core'
+		exclude group: 'org.hibernate.validator', module: 'hibernate-validator'
+	}
+	implementation ('org.springframework.boot:spring-boot-starter-web') {
+		exclude group: 'org.hibernate.validator', module: 'hibernate-validator'
+	}
+//	runtime(
+//			'org.postgresql:postgresql'
+//	)
+	testImplementation(
+			'org.springframework.boot:spring-boot-starter-test',
+			'org.springframework.security:spring-security-test',
+			'com.github.springtestdbunit:spring-test-dbunit:1.3.0',
+			'org.dbunit:dbunit:2.5.3',
+			'commons-io:commons-io:2.5',
+			'com.github.springtestdbunit:spring-test-dbunit:1.3.0',
+			'org.dbunit:dbunit:2.6.0'
+//			,'com.h2database:h2'
+	)
+}
+bootJar {
+	baseName = 'promotion-service'
+}
+
