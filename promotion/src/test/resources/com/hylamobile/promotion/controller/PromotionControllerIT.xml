@@ -380,7 +380,7 @@
                    minimumcredit_exchangerate="1.00" promotionappliedto="TRADE_POST_INSPECTION"
                    includerecycleitem="false" max_occurences="0" count_occurences="GLOBALLY"
                    applyforanyvaluedevice="true" enableadjustmentdeduction="false" spo_eligible="false"
-                   minimumeligible_amount="150" minimumeligible_currency="USD" frp_eligible="false" has_tac="false" has_esn="false" />
+                   minimumeligible_amount="0" minimumeligible_currency="USD" frp_eligible="false" has_tac="false" has_esn="false" />
     <fs_company_promotion companypromotionid="41"
                           promotionid="4" companyid="1" createddate="2015-08-01 09:00:01.877"
                           version="0" />

@@ -59,8 +59,11 @@ public class PromotionPostDBFilterServiceImpl implements PromotionPostDBFilterSe
     @Override
     public List<CalculatedAmountBean<Promotion>> retrieveAvailablePromotions(PromotionSearchDTO searchBean,
             Collection<Promotion> allAvailablePromotions) {
-        Money amount = new Money(searchBean.getItemDetail().getBaseCredit(), Currency
-                .getInstance(searchBean.getItemDetail().getCurrencyCode()));
+        Money amount = Money.newZeroInstance(Currency.getInstance("USD"));
+        if(searchBean.getItemDetail()!=null){
+            amount = new Money(searchBean.getItemDetail().getBaseCredit(), Currency
+                    .getInstance(searchBean.getItemDetail().getCurrencyCode()));
+        }
         return fliterAndConvertValidPromotions(searchBean, amount, allAvailablePromotions);
     }
 

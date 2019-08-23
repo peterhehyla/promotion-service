@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PromotionControllerIT extends SpringMvcIT {
 
 	@Test
-	public void retrieveAvailablePromotions() throws Exception {
+	public void retrievePromotions() throws Exception {
 		PromotionSearchDTO promotionSearch = new PromotionSearchDTO();
 		Set<String> modelCodes = new HashSet<>();
 		modelCodes.add("123");
@@ -49,7 +49,7 @@ public class PromotionControllerIT extends SpringMvcIT {
 		assertTrue(promotions.stream().anyMatch(p->p.getPromotionId()==2L));
 	}
 	@Test
-	public void retrieveAvailablePromotionsForModelCode111() throws Exception {
+	public void retrievePromotionsForModelCode111() throws Exception {
 		PromotionSearchDTO promotionSearch = new PromotionSearchDTO();
 		Set<String> modelCodes = new HashSet<>();
 		modelCodes.add("111");
@@ -69,7 +69,7 @@ public class PromotionControllerIT extends SpringMvcIT {
 		assertTrue(promotions.stream().anyMatch(p->p.getPromotionId()==3L));
 	}
 	@Test
-	public void retrieveAvailablePromotionsWithQuestionResponse() throws Exception {
+	public void retrievePromotionsWithQuestionResponse() throws Exception {
 		PromotionSearchDTO promotionSearch = new PromotionSearchDTO();
 		Set<String> modelCodes = new HashSet<>();
 		modelCodes.add("222");
@@ -86,6 +86,25 @@ public class PromotionControllerIT extends SpringMvcIT {
 		List<PromotionDTO> promotions = objectMapper.readValue(result.getResponse().getContentAsString(),new TypeReference<List<PromotionDTO>>(){});
 		Assert.assertEquals(2, promotions.size());
 		assertTrue(promotions.stream().anyMatch(p->p.getPromotionId()==1L));
+		assertTrue(promotions.stream().anyMatch(p->p.getPromotionId()==4L));
+	}
+	@Test
+	public void retrieveAvailablePromotions() throws Exception {
+		PromotionSearchDTO promotionSearch = new PromotionSearchDTO();
+		Set<String> modelCodes = new HashSet<>();
+		modelCodes.add("222");
+		promotionSearch.setAffectedCompanyId(1L);
+		promotionSearch.setModelCodes(modelCodes);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String promotionSearchStr = objectMapper.writeValueAsString(promotionSearch);
+
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/vzw/activepromotions")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON).content(promotionSearchStr))
+				.andExpect(status().isOk())
+				.andReturn();
+		List<PromotionDTO> promotions = objectMapper.readValue(result.getResponse().getContentAsString(),new TypeReference<List<PromotionDTO>>(){});
+		Assert.assertEquals(1, promotions.size());
 		assertTrue(promotions.stream().anyMatch(p->p.getPromotionId()==4L));
 	}
 }

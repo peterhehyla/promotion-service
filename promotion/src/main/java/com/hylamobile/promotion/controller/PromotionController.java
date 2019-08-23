@@ -1,5 +1,6 @@
 package com.hylamobile.promotion.controller;
 
+import com.hylamobile.promotion.bean.CalculatedAmountBean;
 import com.hylamobile.promotion.domain.Promotion;
 import com.hylamobile.promotion.dto.CustomerDTO;
 import com.hylamobile.promotion.dto.PromotionDTO;
@@ -30,15 +31,22 @@ public class PromotionController {
     private DozerBeanMapper dozerBeanMapper;
     @PostMapping(value = "/{program}/promotions")
     @ResponseBody
-    public List<PromotionDTO> retrieveAvailablePromotions(
+    public List<PromotionDTO> retrievePromotions(
             @PathVariable String program,
             @RequestBody PromotionSearchDTO promotionSearch){
         List<Promotion> promotions = promotionService.getValidPromotions(promotionSearch);
         return promotions.stream().map(p->dozerBeanMapper.map(p, PromotionDTO.class)).collect(Collectors.toList());
     }
+    @PostMapping(value = "/{program}/activepromotions")
+    @ResponseBody
+    public List<PromotionDTO> retrieveAvailablePromotions(@PathVariable String program,
+            @RequestBody PromotionSearchDTO promotionSearch){
+        List<CalculatedAmountBean<Promotion>> promotions = promotionService.retrieveAvailablePromotions(promotionSearch);
+        return promotions.stream().map(p->dozerBeanMapper.map(p.getObject(), PromotionDTO.class)).collect(Collectors.toList());
+    }
     @PostMapping(value = "/{program}/criterions")
     @ResponseBody
-    public Set<PromotionQualifierDTO> findGroupCriteria(CustomerDTO customer){
+    public Set<PromotionQualifierDTO> findGroupCriteria(@RequestBody CustomerDTO customer){
         return promotionCriterionService.findPromotionQualifier(customer);
     }
 }
