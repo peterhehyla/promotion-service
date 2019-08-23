@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,7 +38,7 @@ public class PromotionController {
     }
     @PostMapping(value = "/{program}/criterions")
     @ResponseBody
-    public List<PromotionQualifierDTO> findGroupCriteria(CustomerDTO customer){
+    public Set<PromotionQualifierDTO> findGroupCriteria(CustomerDTO customer){
         return promotionCriterionService.findPromotionQualifier(customer);
     }
 }
